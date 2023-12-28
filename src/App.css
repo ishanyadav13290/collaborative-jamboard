@@ -1,14 +1,102 @@
 .App {
   background-color: #4158D0;
   background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
   width: 100%;
   padding: 3em 1em;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
+  justify-content: center;
+  gap: 30px;
 }
 
+.joinees{
+  background: white;
+  height: 450px;
+  width: fit-content;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.chatsSection{
+  background: white;
+  height: 450px;
+  width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.other{
+  width: fit-content;
+  background: #857e7e;
+}
+.me{
+  width: fit-content;
+  background: rgb(15, 192, 68);
+}
+@media (max-width: 768px) {
+  .App {
+    /* flex-direction: column; */
+    display: block;
+    text-align: center;
+  }
+  .joinees{
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .chatsSection{
+    margin: 2% auto;
+  }
+}
+
+.chatsSection > h3{
+  text-align: center;
+  border-bottom: 1px solid;
+}
+.chatsSection input{
+  width: 100%;
+  border: 1px dashed grey;
+  padding: 10px;
+}
+
+.chats{
+  height: 80%;
+  border: 1px solid black;
+  overflow-y: scroll;
+}
+
+.individualChats {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 300px;
+}
+
+.senderName {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.messageText {
+  margin-top: 5px;
+}
+
+.send{
+  display: flex;
+}
+.send > button{
+  background: transparent;
+  border: 1px solid grey;
+  padding: 10px;
+  cursor: pointer;
+}
 
 .tools {
   display: flex;

@@ -1,35 +1,62 @@
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-const Board = ({ brushColor, brushSize }) => {
+const Board = ({ brushColor, brushSize, socket, roomId }) => {
   const canvasRef = useRef(null);
-  let contextRef;
-
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io("http://localhost:5000");
-    console.log(newSocket, "Connected to socket");
-    setSocket(newSocket);
-  }, []);
+  let contextRef=useRef({});
 
   useEffect(() => {
     if (socket) {
       // Event listener for receiving canvas data from the socket
-      socket.on("canvasImage", (data) => {
-        // Create an image object from the data URL
+      socket.on("canvasImage", (dataURL) => {
+        console.log("data incoming")
         const image = new Image();
-        image.src = data;
-
+        image.src = dataURL;
+  
         const canvas = canvasRef.current;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         const ctx = canvas.getContext("2d");
+  
         // Draw the image onto the canvas
         image.onload = () => {
           ctx.drawImage(image, 0, 0);
         };
       });
     }
+  }, [socket]);
+
+  useEffect(() => {
+    // if (socket) {
+      // Event listener for receiving canvas data from the socket
+      function latestDrawing(data){
+        // socket.on("receiveMessage", (data) => {
+          console.log(data)
+          // Create an image object from the data URL
+          const image = new Image();
+          image.src = data.dataURL;
+  
+          const canvas = canvasRef.current;
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          const ctx = canvas.getContext("2d");
+          // Draw the image onto the canvas
+          image.onload = () => {
+            ctx.drawImage(image, 0, 0);
+          };
+        // });
+      }
+      function erase(){
+        console.log("erase is happened")
+        contextRef?.current.clearRect(
+          0,
+          0,
+          canvasRef.current.width,
+          canvasRef.current.height
+        );
+      }
+
+      socket.on("newCanvas",latestDrawing)
+      socket.on("erase",erase)
+
+    // }
   }, [socket]);
 
   useEffect(() => {
@@ -68,15 +95,14 @@ const Board = ({ brushColor, brushSize }) => {
       // Send the dataURL or image data to the socket
       // console.log('drawing ended')
       if (socket) {
-        socket.emit("canvasImage", dataURL);
-        console.log("drawing ended");
+        socket.emit("canvasImage", {dataURL,room:roomId});
       }
       isDrawing = false;
     };
 
     const canvas = canvasRef.current;
     const ctx = canvasRef.current?.getContext("2d");
-    contextRef = ctx;
+    contextRef.current = ctx;
 
     // Set initial drawing styles
     if (ctx) {
@@ -119,12 +145,15 @@ const Board = ({ brushColor, brushSize }) => {
   }, []);
 
   function clear() {
-    contextRef.clearRect(
+    const canvas = canvasRef.current;
+      const dataURL = canvas.toDataURL();
+    contextRef?.current.clearRect(
       0,
       0,
       canvasRef.current.width,
       canvasRef.current.height
     );
+    socket.emit("eraseImage",{room:roomId,dataURL})
   }
 
   let buttonStyle = {
@@ -136,6 +165,7 @@ const Board = ({ brushColor, brushSize }) => {
    padding: "10px",
   }
   }
+
 
   return (
     <>
