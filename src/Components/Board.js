@@ -33,13 +33,13 @@ const Board = ({ brushColor, brushSize, socket, roomId }) => {
           // Create an image object from the data URL
           const image = new Image();
           image.src = data.dataURL;
-  
-          const canvas = canvasRef.current;
+          console.log(canvasRef)
+          const canvas = canvasRef?.current;
           // eslint-disable-next-line react-hooks/exhaustive-deps
-          const ctx = canvas.getContext("2d");
+          const ctx = canvas?.getContext("2d");
           // Draw the image onto the canvas
           image.onload = () => {
-            ctx.drawImage(image, 0, 0);
+            ctx?.drawImage(image, 0, 0);
           };
         // });
       }
@@ -171,7 +171,7 @@ const Board = ({ brushColor, brushSize, socket, roomId }) => {
     <>
       <canvas
         ref={canvasRef}
-        width={windowSize[0] > 600 ? 600 : 300}
+        width={windowSize[0] > 600 ? 800 : 300}
         height={windowSize[1] > 400 ? 400 : 200}
         style={{ backgroundColor: "white" }}
       />

@@ -15,12 +15,20 @@ const io = new Server(server , {
     }
 })
 
+let rooms={}
+
 io.on("connection",(socket)=>{
 
     socket.on("join",(data)=>{
-        console.log(data)
+        const room = data.room
+        if(!rooms[room]){
+            rooms[room]=[]
+            rooms[room].push({...data,id:socket.id})
+        }else{
+            rooms[room].push({...data,id:socket.id})
+        }
         socket.join(data.room)
-        socket.to(data.room).emit("userJoined",{...data,id:socket.id})
+        io.to(data.room).emit("userJoined",rooms[room])
     })
     
     socket.on("canvasImage",(data)=>{

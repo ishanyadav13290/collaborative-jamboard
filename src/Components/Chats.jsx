@@ -24,8 +24,14 @@ const Chats = ({socket,name,id}) => {
     <div className='chatsSection'>
         <h3>CHATS</h3>
         <div className="chats">
-            {allMsgs.map((el,i)=>{
-                return <IndividualChats key={i} data={el} socket={socket} />
+        {allMsgs.map((el, i) => {
+              if (el.id==socket.id) {
+                return <SentChats key={i} data={el} socket={socket} />;
+              } else {
+                return (
+                  <ReceivedChats key={i} data={el} socket={socket} />
+                );
+              }
             })}
         </div>
         <div className='send'>
@@ -37,10 +43,18 @@ const Chats = ({socket,name,id}) => {
 }
 
 
-const IndividualChats = ({data,socket}) => {
+const SentChats = ({data,socket}) => {
   return (
-    <div className={data.id==socket.id?'individualChats me':'individualChats other'}>
-    <p>{data.id==socket.id?"You":data.name}</p>
+      <div className={"me"}>
+    <p className='senderName'>{data.id==socket.id?"You":data.name}</p>
+      <div className='messageText'>{data.message}</div>
+    </div>
+  )
+}
+const ReceivedChats = ({data,socket}) => {
+  return (
+      <div className={'other'}>
+    <p className='senderName'>{data.id==socket.id?"You":data.name}</p>
       <div className='messageText'>{data.message}</div>
     </div>
   )

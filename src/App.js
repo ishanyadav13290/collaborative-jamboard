@@ -7,9 +7,10 @@ import { useMemo, useState } from "react";
 function App() {
   const [name, setName] = useState("User");
     const socket = useMemo(() => io("http://localhost:3001"), []);
+
   return (
     <>
-    <div>
+    <div style={{minHeight:"100vh"}}>
     <Routes>  
       <Route path="/" element={<Main socket={socket} name={name}
 setName={setName} />} />

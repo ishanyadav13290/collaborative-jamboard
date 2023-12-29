@@ -6,7 +6,6 @@
   width: 100%;
   padding: 3em 1em;
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   gap: 30px;
@@ -14,7 +13,8 @@
 
 .joinees{
   background: white;
-  height: 450px;
+  /* height: 450px; */
+  align-self: flex-start;
   width: fit-content;
   padding: 20px;
   border-radius: 10px;
@@ -23,7 +23,7 @@
 .chatsSection{
   background: white;
   height: 450px;
-  width: 400px;
+  width: 20%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -31,31 +31,38 @@
   border-radius: 10px;
 }
 
+.chats{
+  height: 80%;
+  border: 1px solid black;
+  overflow: hidden scroll;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.me,.other {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
 .other{
   width: fit-content;
-  background: #857e7e;
+  background: rgb(221, 221, 221);
+  margin-right: 100%;
+  align-self: flex-start;
 }
 .me{
   width: fit-content;
+  align-self: flex-end;
   background: rgb(15, 192, 68);
 }
-@media (max-width: 768px) {
-  .App {
-    /* flex-direction: column; */
-    display: block;
-    text-align: center;
-  }
-  .joinees{
-    width: fit-content;
-    height: fit-content;
-  }
 
-  .chatsSection{
-    margin: 2% auto;
-  }
-}
-
-.chatsSection > h3{
+.chatsSection > h3, .joinees >h3{
   text-align: center;
   border-bottom: 1px solid;
 }
@@ -65,23 +72,10 @@
   padding: 10px;
 }
 
-.chats{
-  height: 80%;
-  border: 1px solid black;
-  overflow-y: scroll;
-}
-
-.individualChats {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  max-width: 300px;
-}
-
 .senderName {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
+  text-decoration: underline;
 }
 
 .messageText {
@@ -97,6 +91,24 @@
   padding: 10px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .App {
+    /* flex-direction: column; */
+    display: block;
+    text-align: center;
+  }
+  .joinees{
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .chatsSection{
+    margin: 2% auto;
+    width: 90%;
+  }
+}
+
 
 .tools {
   display: flex;
@@ -118,6 +130,9 @@ h1 {
 
 input {
   margin: 0 5px;
+}
+canvas{
+  border-radius: 10px;
 }
 
 
