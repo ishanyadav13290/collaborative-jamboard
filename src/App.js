@@ -6,7 +6,8 @@ import { useMemo, useState } from "react";
 
 function App() {
   const [name, setName] = useState("User");
-    const socket = useMemo(() => io("http://localhost:3001"), []);
+    // const socket = useMemo(() => io("http://localhost:3001"), []);
+    const socket = useMemo(() => io("https://kollab.onrender.com/"), []);
 
   return (
     <>
